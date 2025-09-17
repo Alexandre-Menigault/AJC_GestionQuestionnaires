@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Commands\NewFile1.txt" />
+    <None Remove="Models\NewFile1.txt" />
+    <None Remove="Models\Questionnaire.Css" />
+    <None Remove="NewFile1.txt" />
+    <None Remove="Services\NewFile1.txt" />
+    <None Remove="ViewModels\Abstractions\NewFile1.txt" />
+    <None Remove="ViewModels\MainWindowViewModel" />
+    <None Remove="ViewModels\NewFile1.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Themes\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AJC_GestionQuestionnaires.Data\AJC_GestionQuestionnaires.Data.csproj" />
+  </ItemGroup>
+
+</Project>
