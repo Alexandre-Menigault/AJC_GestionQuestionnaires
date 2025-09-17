@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Commands\NewFile1.txt" />
+    <None Remove="Converters\NewFile1.txt" />
     <None Remove="Models\NewFile1.txt" />
     <None Remove="Models\Questionnaire.Css" />
     <None Remove="NewFile1.txt" />
@@ -20,11 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Themes\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
   </ItemGroup>
 
   <ItemGroup>

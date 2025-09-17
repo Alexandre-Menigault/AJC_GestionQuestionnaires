@@ -19,6 +19,12 @@ public sealed partial class QuestionnaireViewModel
     [ObservableProperty]
     private Question? selectedQuestion;
     private QuestionService questionService;
+
+    [ObservableProperty]
+    private bool isErrorMessageBoxEnabled = false;
+    [ObservableProperty]
+    private string errorMessageBoxText = String.Empty;
+
     public QuestionnaireViewModel()
     {
         this.questionService = new QuestionService();

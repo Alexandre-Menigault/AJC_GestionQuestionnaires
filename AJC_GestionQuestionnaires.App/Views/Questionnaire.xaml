@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AJC_GestionQuestionnaires.App"
         xmlns:models="clr-namespace:AJC_GestionQuestionnaires.Data.Models;assembly=AJC_GestionQuestionnaires.Data"
+        xmlns:converters="clr-namespace:AJC_GestionQuestionnaires.App.Converters"
         xmlns:viewmodels="clr-namespace:AJC_GestionQuestionnaires.App.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:behaviors="clr-namespace:AJC_GestionQuestionnaires.App.Behaviors"
         d:DataContext="{d:DesignInstance Type=viewmodels:QuestionnaireViewModel}"
         mc:Ignorable="d"
         Title="Questionnaire Manager" Height="500" Width="800">
@@ -22,6 +25,7 @@
                 <Label VerticalAlignment="Center" Grid.Column="1" Content="{Binding Answer}" />
             </Grid>
         </DataTemplate>
+        <converters:IsNotNullConverter x:Key="IsNotNull"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -54,7 +58,8 @@
 
                 <GroupBox Grid.Column="1" Header="Add/Modify Question">
                     <GroupItem VerticalAlignment="Stretch">
-                        <StackPanel Grid.Row="0" VerticalAlignment="Top" Grid.RowSpan="3">
+                        <StackPanel Grid.Row="0" VerticalAlignment="Top" Grid.RowSpan="3"
+                                IsEnabled="{Binding SelectedUser, Converter={StaticResource IsNotNull}}">
                             <Label Content="Question:" Grid.Column="1" />
                             <TextBox Height="30" Text="{Binding  SelectedQuestion.Title}" />
 
@@ -65,7 +70,11 @@
                             <TextBox Height="30" Text="{Binding SelectedQuestion.Answer4}" />
 
                             <Label Content="Correct Answer:" />
-                            <TextBox Height="30" Text="{Binding SelectedQuestion.Answer}" />
+                            <TextBox Height="30" Text="{Binding SelectedQuestion.Answer}"  >
+                                <i:Interaction.Behaviors>
+                                    <behaviors:CorrectAnswerBehavior />
+                                </i:Interaction.Behaviors>
+                            </TextBox>
                             <Grid Margin="0,20,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -78,7 +87,11 @@
                                         Command="{Binding DeleteCommand}"
                                         CommandParameter="{Binding SelectedQuestion}">Delete Question</Button>
                              </Grid>
-                            </StackPanel>
+                            <TextBlock IsEnabled="{Binding IsErrorMessageBoxEnabled}" 
+                                       Text="{Binding ErrorMessageBoxText}"
+                                       Foreground="Red"
+                                       Height="50" x:Name="ErrorMessageBox"/>
+                        </StackPanel>
                     </GroupItem>
                 </GroupBox>
 
