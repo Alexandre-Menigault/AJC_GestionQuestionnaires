@@ -19,7 +19,7 @@ public sealed partial class QuestionnaireViewModel
 
     public ObservableCollection<Question> Questions { get; set; }
 
-    private Window window;
+    public readonly QuestionnaireWindow window;
 
     [ObservableProperty]
     private Question? selectedQuestion;
@@ -33,7 +33,7 @@ public sealed partial class QuestionnaireViewModel
     [ObservableProperty]
     private string errorMessageBoxText = String.Empty;
 
-    public QuestionnaireViewModel(Window window, Questionnaire questionnaire)
+    public QuestionnaireViewModel(QuestionnaireWindow window, Questionnaire questionnaire)
     {
         this.window = window;
         this.questionService = new QuestionService();

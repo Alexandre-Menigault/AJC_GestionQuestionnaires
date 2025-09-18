@@ -20,5 +20,5 @@ public class QuestionnaireService
 
     public void RemoveQuestionnaire(Questionnaire questionnaire) => questionnaireRepository.Delete(questionnaire.Id);
 
-    public void UpdateQuestionnaire(Questionnaire questionnaire) => questionnaireRepository.Update(questionnaire.Id);
+    public void UpdateQuestionnaire(Questionnaire questionnaire) => questionnaireRepository.Update(questionnaire);
 }

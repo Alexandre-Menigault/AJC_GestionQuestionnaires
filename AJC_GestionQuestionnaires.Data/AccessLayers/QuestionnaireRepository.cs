@@ -40,10 +40,8 @@ public class QuestionnaireRepository
         }
     }
 
-    public void Update(long id)
+    public void Update(Questionnaire questionnaire)
     {
-        var questionnaire = _dbContext.Questionnaires.Find(id);
-
         if (questionnaire is not null)
         {
             _dbContext.Questionnaires.Update(questionnaire);

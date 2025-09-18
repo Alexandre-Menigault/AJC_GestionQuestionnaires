@@ -67,13 +67,34 @@
                             <TextBox Height="30" Text="{Binding  SelectedQuestion.Title}" />
 
                             <Label Content="Possible Answers:" Grid.Column="1" />
-                            <TextBox Margin="0,0,0,10" Height="30" Text="{Binding SelectedQuestion.Answer1}" />
-                            <TextBox Margin="0,0,0,10" Height="30" Text="{Binding SelectedQuestion.Answer2}" />
-                            <TextBox Margin="0,0,0,10" Height="30" Text="{Binding SelectedQuestion.Answer3}" />
-                            <TextBox Height="30" Text="{Binding SelectedQuestion.Answer4}" />
+                            <TextBox Margin="0,0,0,10" Height="30" Text="{Binding SelectedQuestion.Answer1}"
+                                     x:Name="txtBox1">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:CorrectAnswerBehavior />
+                                </i:Interaction.Behaviors>
+                            </TextBox>
+                            <TextBox Margin="0,0,0,10" Height="30" Text="{Binding SelectedQuestion.Answer2}"
+                                     x:Name="txtBox2">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:CorrectAnswerBehavior />
+                                </i:Interaction.Behaviors>
+                            </TextBox>
+                            <TextBox Margin="0,0,0,10" Height="30" Text="{Binding SelectedQuestion.Answer3}"
+                                     x:Name="txtBox3">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:CorrectAnswerBehavior />
+                                </i:Interaction.Behaviors>
+                            </TextBox>
+                            <TextBox Height="30" Text="{Binding SelectedQuestion.Answer4}"
+                                     x:Name="txtBox4">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:CorrectAnswerBehavior />
+                                </i:Interaction.Behaviors>
+                            </TextBox>
 
                             <Label Content="Correct Answer:" />
-                            <TextBox Height="30" Text="{Binding SelectedQuestion.Answer}"  >
+                            <TextBox Height="30" Text="{Binding SelectedQuestion.Answer}"
+                                     x:Name="txtBoxAnswer">
                                 <i:Interaction.Behaviors>
                                     <behaviors:CorrectAnswerBehavior />
                                 </i:Interaction.Behaviors>

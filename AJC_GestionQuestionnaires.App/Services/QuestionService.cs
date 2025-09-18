@@ -21,5 +21,5 @@ public class QuestionService
 
     public void RemoveQuestion(Question question) => questionRepository.Delete(question.Id);
 
-    public void UpdateQuestion(Question question) => questionRepository.Update(question.Id);
+    public void UpdateQuestion(Question question) => questionRepository.Update(question);
 }

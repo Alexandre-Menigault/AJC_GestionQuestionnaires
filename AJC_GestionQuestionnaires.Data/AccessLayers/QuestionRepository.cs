@@ -36,9 +36,8 @@ public sealed class QuestionRepository
         }
     }
 
-    public void Update(long id)
+    public void Update(Question question)
     {
-        var question = dbContext.Questions.Find(id);
         if (question is not null)
         {
             dbContext.Questions.Update(question);

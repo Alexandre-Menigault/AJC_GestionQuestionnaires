@@ -1,5 +1,6 @@
-﻿using AJC_GestionQuestionnaires.Data.Models;
-using AJC_GestionQuestionnaires.App.ViewModels;
+﻿using AJC_GestionQuestionnaires.App.ViewModels;
+using AJC_GestionQuestionnaires.App.Views;
+using AJC_GestionQuestionnaires.Data.Models;
 using Microsoft.Xaml.Behaviors;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AJC_GestionQuestionnaires.App.Behaviors
 {
@@ -33,7 +35,17 @@ namespace AJC_GestionQuestionnaires.App.Behaviors
             Question? question = context.SelectedQuestion;
 
             if (question is null) return;
-            var correct = IsCorrect(txtBox.Text, question);
+            var text = question.Answer;
+            if (txtBox.Name.Equals("txtBoxAnswer"))
+            {
+                text = txtBox.Text;
+            }
+            var correct = IsCorrect(text, context.window);
+            if (string.IsNullOrEmpty(txtBox.Text))
+            {
+                context.ErrorMessageBoxText = "La réponse ne peut pas être vide";
+                context.IsErrorMessageBoxEnabled = true;
+            }
             if (!correct)
             {
                 context.ErrorMessageBoxText = "La réponse entrée n'existe pas parmis les propositions";
@@ -45,9 +57,9 @@ namespace AJC_GestionQuestionnaires.App.Behaviors
             }
         }
 
-        private bool IsCorrect(string text, Question question) 
+        private bool IsCorrect(string text, QuestionnaireWindow window)
         {
-            var questions = new List<string>([question.Answer1, question.Answer2, question.Answer3!, question.Answer4!]);
+            var questions = new List<string>([window.txtBox1.Text, window.txtBox2.Text, window.txtBox3.Text, window.txtBox4.Text]);
             return questions.Contains(text);
         }
     }

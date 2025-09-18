@@ -38,7 +38,6 @@ public sealed partial class MainWindowViewModel : ObservableObject, INotifyColle
         this.AddQuestionnaireCommand = new RelayCommand(this.AddQuestionnaire);
         this.UpdateQuestionnaireCommand = new RelayCommand<Questionnaire>(this.UpdateQuestionnaire);
         this.DeleteQuestionnaireCommand = new RelayCommand<Questionnaire>(this.DeleteQuestionnaire);
-        //this.Questionnaires = questionnaireService.Questionnaires;
     }
 
     public void AddQuestionnaire()
@@ -68,6 +67,11 @@ public sealed partial class MainWindowViewModel : ObservableObject, INotifyColle
     private void NewWindow_Closed(object? sender, EventArgs e)
     {
         var qService = new QuestionnaireService();
+        if (SelectedQuestionnaire is not null)
+        {
+            SelectedQuestionnaire.Questions = null;
+            qService.UpdateQuestionnaire(SelectedQuestionnaire);
+        }
         var temp = qService.GetQuestionnaires();
         this.Questionnaires = temp;
     }
