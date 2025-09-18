@@ -8,8 +8,6 @@ public class QuestionnaireService
 {
     private readonly QuestionnaireRepository questionnaireRepository;
 
-    public static ObservableCollection<Questionnaire> Questionnaires = new();
-
     public QuestionnaireService()
     {
         this.questionnaireRepository = new QuestionnaireRepository();
@@ -18,7 +16,9 @@ public class QuestionnaireService
     public ObservableCollection<Questionnaire> GetQuestionnaires()
         => new ObservableCollection<Questionnaire>(this.questionnaireRepository.Questionnaires);
 
-    public static void AddQuestionaire(Questionnaire questionnaire) => Questionnaires.Add(questionnaire);
+    public Questionnaire AddQuestionnaire(Questionnaire questionnaire) => questionnaireRepository.Add(questionnaire);
 
-    public static void RemoveQuestionaire(Questionnaire questionnaire) => Questionnaires.Remove(questionnaire);
+    public void RemoveQuestionnaire(Questionnaire questionnaire) => questionnaireRepository.Delete(questionnaire.Id);
+
+    public void UpdateQuestionnaire(Questionnaire questionnaire) => questionnaireRepository.Update(questionnaire.Id);
 }

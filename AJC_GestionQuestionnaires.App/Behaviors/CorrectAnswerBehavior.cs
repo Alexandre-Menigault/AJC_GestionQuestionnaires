@@ -23,7 +23,7 @@ namespace AJC_GestionQuestionnaires.App.Behaviors
         {
             base.OnDetaching();
             var txtBox = this.AssociatedObject as TextBox;
-            txtBox.TextChanged += OnTextChanged;
+            txtBox.TextChanged -= OnTextChanged;
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
@@ -47,11 +47,8 @@ namespace AJC_GestionQuestionnaires.App.Behaviors
 
         private bool IsCorrect(string text, Question question) 
         {
-            if (text.Equals(question.Answer1)) return true;
-            if (text.Equals(question.Answer2)) return true;
-            if (text.Equals(question.Answer3)) return true;
-            if (text.Equals(question.Answer4)) return true;
-            return false;
+            var questions = new List<string>([question.Answer1, question.Answer2, question.Answer3!, question.Answer4!]);
+            return questions.Contains(text);
         }
     }
 }

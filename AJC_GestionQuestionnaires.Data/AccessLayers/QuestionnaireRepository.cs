@@ -1,4 +1,5 @@
 ﻿using AJC_GestionQuestionnaires.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,21 +18,35 @@ public class QuestionnaireRepository
     }
 
     public List<Questionnaire> Questionnaires => 
-        _dbContext.Questionnaires.ToList();
+        _dbContext.Questionnaires
+            .Include(q => q.Questions)
+            .ToList();
 
-    public void Add(Questionnaire questionnaire)
+    public Questionnaire Add(Questionnaire questionnaire)
     {
-        _dbContext.Questionnaires.Add(questionnaire);
+        var dbEntity = _dbContext.Questionnaires.Add(questionnaire);
         _dbContext.SaveChanges();
+        return dbEntity.Entity;
     }
 
     public void Delete(long id)
     {
         var questionnaire = _dbContext.Questionnaires.Find(id);
 
-        if(questionnaire is not null)
+        if (questionnaire is not null)
         {
             _dbContext.Questionnaires.Remove(questionnaire);
+            _dbContext.SaveChanges();
+        }
+    }
+
+    public void Update(long id)
+    {
+        var questionnaire = _dbContext.Questionnaires.Find(id);
+
+        if (questionnaire is not null)
+        {
+            _dbContext.Questionnaires.Update(questionnaire);
             _dbContext.SaveChanges();
         }
     }

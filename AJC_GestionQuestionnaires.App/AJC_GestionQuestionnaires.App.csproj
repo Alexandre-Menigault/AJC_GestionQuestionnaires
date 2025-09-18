@@ -10,9 +10,6 @@
 
   <ItemGroup>
     <None Remove="Commands\NewFile1.txt" />
-    <None Remove="Converters\NewFile1.txt" />
-    <None Remove="Models\NewFile1.txt" />
-    <None Remove="Models\Questionnaire.Css" />
     <None Remove="NewFile1.txt" />
     <None Remove="Services\NewFile1.txt" />
     <None Remove="ViewModels\Abstractions\NewFile1.txt" />

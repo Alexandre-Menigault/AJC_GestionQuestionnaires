@@ -21,14 +21,18 @@ public sealed partial class QuestionnaireViewModel
     private QuestionService questionService;
 
     [ObservableProperty]
+    private Questionnaire questionnaire;
+
+    [ObservableProperty]
     private bool isErrorMessageBoxEnabled = false;
     [ObservableProperty]
     private string errorMessageBoxText = String.Empty;
 
-    public QuestionnaireViewModel()
+    public QuestionnaireViewModel(Questionnaire questionnaire)
     {
         this.questionService = new QuestionService();
-        this.Questions =  questionService.GetQuestions();
+        this.Questionnaire = questionnaire;
+        this.Questions =  new ObservableCollection<Question>(questionnaire.Questions); // TODO : Remplacer par Questionnaire.questions
         this.AddCommand = new RelayCommand(this.AddQuestion);
         this.DeleteCommand = new RelayCommand<Question>(this.DeleteQuestion);
         this.UpdateCommand = new RelayCommand<Question>(this.UpdateQuestion);
@@ -43,12 +47,14 @@ public sealed partial class QuestionnaireViewModel
             Answer1 = "Réponse 1",
             Answer2 = "Réponse 2",
             Answer3 = "Réponse 3",
-            Answer4 = "Réponse 4"
+            Answer4 = "Réponse 4",
+            QuestionnaireId = Questionnaire.Id
         };
         
         
         // La valeur renvoyée est l'entitée avec l'ID généré par la DB
         var q = questionService.AddQuestion(question);
+        Questionnaire.Questions.Add(q);
         Questions.Add(q);
         this.SelectedQuestion = q;
     }

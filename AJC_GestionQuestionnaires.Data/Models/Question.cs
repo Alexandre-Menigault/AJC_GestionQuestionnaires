@@ -38,5 +38,7 @@ namespace AJC_GestionQuestionnaires.Data.Models
         [Required]
         [MaxLength(200)]
         public string Answer { get; set; } = null!;
+
+        public long QuestionnaireId { get; set; }
     }
 }

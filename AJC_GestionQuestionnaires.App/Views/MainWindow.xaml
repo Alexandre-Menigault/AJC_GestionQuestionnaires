@@ -4,8 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AJC_GestionQuestionnaires.App"
+        xmlns:viewmodels="clr-namespace:AJC_GestionQuestionnaires.App.ViewModels"
+        xmlns:converters="clr-namespace:AJC_GestionQuestionnaires.App.Converters"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="Questionnaire Manager" Height="450" Width="800">
+
+    <Window.Resources>
+        <converters:IEnumerableCountConverter x:Key="IEnumerableCountString"/>
+        <converters:IsNotNullConverter x:Key="IsNotNull"/>
+        
+        <DataTemplate x:Key="QuestionnaireItemTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label VerticalAlignment="Center" Grid.Column="0" Content="{Binding Title}" />
+                <Label Grid.Column="1" VerticalAlignment="Center"  Content="{Binding Questions, Converter={StaticResource IEnumerableCountString}}"/>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+
+
     <GroupBox>
         <Grid>
 
@@ -20,13 +42,33 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="List of Questionnaires" />
-                <ListBox Grid.Row="1">
+                <ListBox Grid.Row="1" 
+                        SelectedItem="{Binding SelectedQuestionnaire}"
+                        ItemTemplate="{StaticResource QuestionnaireItemTemplate}"
+                        ItemsSource="{Binding Questionnaires}">
             
                 </ListBox>
                 
             </Grid>
 
-            <Button Grid.Row="1" Width="200" Margin="0,5,0,0" Height="30" Content="New Questionnaire" Click="NewQuestionnaireButton_Clicked" />
+            <StackPanel Grid.Row="1" Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                
+                <Button  Width="200" Margin="0,0,10,0" Height="30" Content="New Questionnaire" 
+                        x:Name="AddQuestionnaireButton"
+                        Command="{Binding AddQuestionnaireCommand}" />
+
+                <Button  Width="200" Margin="0,0,10,0" Height="30" Content="Update Questionnaire" 
+                        x:Name="UpdateQuestionnaireButton"
+                        Command="{Binding UpdateQuestionnaireCommand}"
+                         CommandParameter="{Binding SelectedQuestionnaire}"
+                        IsEnabled="{Binding SelectedQuestionnaire, Converter={StaticResource IsNotNull}}"/>
+
+                <Button  Width="200" Margin="0,0,10,0" Height="30" Content="Delete Questionnaire" 
+                        x:Name="DeleteQuestionnaireButton"
+                        Command="{Binding DeleteQuestionnaireCommand, Converter={StaticResource IsNotNull}}" />
+
+            </StackPanel>
+            
         </Grid>
     </GroupBox>
 </Window>

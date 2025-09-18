@@ -20,13 +20,7 @@ namespace AJC_GestionQuestionnaires.App.Views
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel();
-        }
-
-        private void NewQuestionnaireButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            var newWindow = new Questionnaire();
-            newWindow.Show();
+            this.DataContext = new MainWindowViewModel(this);
         }
     }
 }

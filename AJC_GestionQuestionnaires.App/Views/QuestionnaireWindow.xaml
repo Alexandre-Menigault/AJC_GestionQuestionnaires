@@ -1,4 +1,4 @@
-﻿<Window x:Class="AJC_GestionQuestionnaires.App.Views.Questionnaire"
+﻿<Window x:Class="AJC_GestionQuestionnaires.App.Views.QuestionnaireWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -26,6 +26,7 @@
             </Grid>
         </DataTemplate>
         <converters:IsNotNullConverter x:Key="IsNotNull"/>
+        <converters:InverseBooleanConverter x:Key="InverseBoolean"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -33,9 +34,12 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        
-        <Button Margin="0,5,0,0" Width="750" Grid.ColumnSpan="1" HorizontalAlignment="Center" Content="Add Empty Question"
-                Command="{Binding AddCommand}"/>
+        <StackPanel Grid.Row="0">
+            <Label Margin="22,0,0,0" Content="Titre du questionnaire"/>
+            <TextBox Width="750" Height="30" Text="{Binding Questionnaire.Title}"/>
+            <Button Margin="0,5,0,0" Width="750" HorizontalAlignment="Center" Content="Add Empty Question"
+                    Command="{Binding AddCommand}"/>
+        </StackPanel>
 
         <GroupBox Grid.Row="1" Margin="0,10,0, 0">
             <Grid Margin="0,5,0,0">
@@ -43,8 +47,6 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
-                <TextBox Height="30" Text="Question" Grid.Column="0" />
                 <GroupBox Grid.Column="0" Header="Questions">
                     <ListBox
                         x:Name="QuestionsListBox"
@@ -59,7 +61,7 @@
                 <GroupBox Grid.Column="1" Header="Add/Modify Question">
                     <GroupItem VerticalAlignment="Stretch">
                         <StackPanel Grid.Row="0" VerticalAlignment="Top" Grid.RowSpan="3"
-                                IsEnabled="{Binding SelectedUser, Converter={StaticResource IsNotNull}}">
+                                IsEnabled="{Binding SelectedQuestion, Converter={StaticResource IsNotNull}}">
                             <Label Content="Question:" Grid.Column="1" />
                             <TextBox Height="30" Text="{Binding  SelectedQuestion.Title}" />
 
@@ -80,7 +82,8 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" HorizontalAlignment="Left" Margin="0,0,20,0" 
+                                <Button Grid.Column="0" HorizontalAlignment="Left" Margin="0,0,20,0"
+                                        IsEnabled="{Binding IsErrorMessageBoxEnabled, Converter={StaticResource InverseBoolean}}"
                                         Command="{Binding UpdateCommand}"
                                         CommandParameter="{Binding SelectedQuestion}">Modify Question</Button>
                                 <Button Grid.Column="1" HorizontalAlignment="Right" 
