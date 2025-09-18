@@ -17,7 +17,7 @@ public class QuestionnaireRepository
         this._dbContext = new QuestionnaireManagerDbContext();
     }
 
-    public List<Questionnaire> Questionnaires => 
+    public List<Questionnaire> GetQuestionnaires() => 
         _dbContext.Questionnaires
             .Include(q => q.Questions)
             .ToList();

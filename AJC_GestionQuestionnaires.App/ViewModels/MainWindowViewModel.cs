@@ -5,13 +5,15 @@ using AJC_GestionQuestionnaires.Data.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 
 
 namespace AJC_GestionQuestionnaires.App.ViewModels;
 
-public sealed partial class MainWindowViewModel : ObservableObject
+public sealed partial class MainWindowViewModel : ObservableObject, INotifyCollectionChanged
 {
     public ICommand AddQuestionnaireCommand{ get; set; } = null!;
     public ICommand UpdateQuestionnaireCommand { get; set; } = null!;
@@ -19,11 +21,14 @@ public sealed partial class MainWindowViewModel : ObservableObject
 
     private Window window;
 
-    public ObservableCollection<Questionnaire> Questionnaires { get; set; } = new();
+    [ObservableProperty]
+    private ObservableCollection<Questionnaire> questionnaires;
     private QuestionnaireService questionnaireService;
 
     [ObservableProperty]
     private Questionnaire? selectedQuestionnaire;
+
+    public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
     public MainWindowViewModel(Window window)
     {
@@ -56,12 +61,15 @@ public sealed partial class MainWindowViewModel : ObservableObject
             var newWindow = new QuestionnaireWindow(questionnaire);
             newWindow.Owner = Window.GetWindow(this.window);
             newWindow.Show();
-
+            newWindow.Closed += NewWindow_Closed;
         }
-        //if (questionnaire is not null)
-        //{
-        //    this.questionnaireService.UpdateQuestionnaire(questionnaire);
-        //}
+    }
+
+    private void NewWindow_Closed(object? sender, EventArgs e)
+    {
+        var qService = new QuestionnaireService();
+        var temp = qService.GetQuestionnaires();
+        this.Questionnaires = temp;
     }
 
     public void DeleteQuestionnaire(Questionnaire? questionnaire)

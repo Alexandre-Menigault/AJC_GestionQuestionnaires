@@ -14,7 +14,7 @@ public class QuestionnaireService
     }
 
     public ObservableCollection<Questionnaire> GetQuestionnaires()
-        => new ObservableCollection<Questionnaire>(this.questionnaireRepository.Questionnaires);
+        => new ObservableCollection<Questionnaire>(questionnaireRepository.GetQuestionnaires());
 
     public Questionnaire AddQuestionnaire(Questionnaire questionnaire) => questionnaireRepository.Add(questionnaire);
 

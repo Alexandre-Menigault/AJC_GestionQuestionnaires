@@ -11,7 +11,7 @@
         xmlns:behaviors="clr-namespace:AJC_GestionQuestionnaires.App.Behaviors"
         d:DataContext="{d:DesignInstance Type=viewmodels:QuestionnaireViewModel}"
         mc:Ignorable="d"
-        Title="Questionnaire Manager" Height="500" Width="800">
+        Title="Questionnaire Manager" Height="600" Width="800">
 
     <Window.Resources>
         <DataTemplate x:Key="QuestionItemTemplate">
@@ -27,6 +27,7 @@
         </DataTemplate>
         <converters:IsNotNullConverter x:Key="IsNotNull"/>
         <converters:InverseBooleanConverter x:Key="InverseBoolean"/>
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>

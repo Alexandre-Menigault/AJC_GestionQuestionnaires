@@ -4,6 +4,9 @@ using AJC_GestionQuestionnaires.App.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
+using System.Windows;
+using System.Windows.Navigation;
+using AJC_GestionQuestionnaires.App.Views;
 
 namespace AJC_GestionQuestionnaires.App.ViewModels;
 
@@ -15,6 +18,8 @@ public sealed partial class QuestionnaireViewModel
     public ICommand UpdateCommand { get; set; } = null!;
 
     public ObservableCollection<Question> Questions { get; set; }
+
+    private Window window;
 
     [ObservableProperty]
     private Question? selectedQuestion;
@@ -28,8 +33,9 @@ public sealed partial class QuestionnaireViewModel
     [ObservableProperty]
     private string errorMessageBoxText = String.Empty;
 
-    public QuestionnaireViewModel(Questionnaire questionnaire)
+    public QuestionnaireViewModel(Window window, Questionnaire questionnaire)
     {
+        this.window = window;
         this.questionService = new QuestionService();
         this.Questionnaire = questionnaire;
         this.Questions =  new ObservableCollection<Question>(questionnaire.Questions); // TODO : Remplacer par Questionnaire.questions
@@ -54,7 +60,6 @@ public sealed partial class QuestionnaireViewModel
         
         // La valeur renvoyée est l'entitée avec l'ID généré par la DB
         var q = questionService.AddQuestion(question);
-        Questionnaire.Questions.Add(q);
         Questions.Add(q);
         this.SelectedQuestion = q;
     }
@@ -63,8 +68,8 @@ public sealed partial class QuestionnaireViewModel
     {
         if (question is not null)
         {
-            this.questionService.RemoveQuestion(question);
-            this.Questions.Remove(question);
+            questionService.RemoveQuestion(question);
+            Questions.Remove(question);
         }
     }
 
